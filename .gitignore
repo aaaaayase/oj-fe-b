@@ -1,8 +1,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 >>>>>>> 92e2930 (First commit)
+=======
+>>>>>>> 8eeb037ec4d8e7f61856ef84233f0ab64f378d88
 =======
 >>>>>>> 8eeb037ec4d8e7f61856ef84233f0ab64f378d88
 # Compiled class file
@@ -29,6 +32,7 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -65,5 +69,7 @@ coverage
 *.tsbuildinfo
 >>>>>>> 6641578 (First commit)
 >>>>>>> 92e2930 (First commit)
+=======
+>>>>>>> 8eeb037ec4d8e7f61856ef84233f0ab64f378d88
 =======
 >>>>>>> 8eeb037ec4d8e7f61856ef84233f0ab64f378d88
