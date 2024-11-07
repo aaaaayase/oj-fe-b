@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getToken } from './cookie';
 
 // 不同的接口请求的是不同的地址 这里起到类似于基类的作用
 const service = axios.create({
@@ -6,6 +7,22 @@ const service = axios.create({
     timeout: 5000,
 })
 
+// 请求拦截器
+service.interceptors.request.use(
+    (config) => {
+        if (getToken()) {
+            config.headers["Authorization"] = "Bearer " + getToken();
+        }
+        return config;
+    },
+    // 返回出现异常
+    (error) => {
+        console.log(error)
+        Promise.reject(error);
+    }
+);
+
+// 响应拦截器
 service.interceptors.response.use(
     (res) => {
         // 未设置状态码则默认成功状态

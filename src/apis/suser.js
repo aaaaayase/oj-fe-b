@@ -10,3 +10,10 @@ export function loginService(userAccount, password) {
         }
     })
 }
+
+export function getUserInfoService(userAccount, password) {
+    return service({
+        url:"/sysUser/info",
+        method:"get",
+    })
+}
