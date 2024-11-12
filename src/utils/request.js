@@ -1,5 +1,8 @@
 import axios from 'axios'
-import { getToken } from './cookie';
+import { getToken, removeToken } from './cookie';
+import router from '@/router';
+
+axios.defaults.headers["Content-Type"] = "application/json;charset=utf-8"
 
 // 不同的接口请求的是不同的地址 这里起到类似于基类的作用
 const service = axios.create({
@@ -28,7 +31,13 @@ service.interceptors.response.use(
         // 未设置状态码则默认成功状态
         const code = res.data.code;
         const msg = res.data.msg;
-        if (code !== 1000) {
+        // 当redis中的token失效时返回3001 这时就需要返回登录页面
+        if (code === 3001) {
+            ElMessage.error(msg);
+            removeToken()
+            router.push('/oj/login')
+            return Promise.reject(new Error(msg));
+        } else if (code !== 1000) {
             ElMessage.error(msg);
             // 在控制台打印错误信息 类似于异常的抛出
             return Promise.reject(new Error(msg));

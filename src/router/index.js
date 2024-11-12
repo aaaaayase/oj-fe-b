@@ -1,3 +1,4 @@
+import { getToken } from '@/utils/cookie'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -7,6 +8,10 @@ const router = createRouter({
       path: '/oj/login',
       name: 'login',
       component: () => import('@/views/Login.vue')
+    },
+    {
+      path: '/',
+      redirect: '/oj/login',
     },
     {
       path: '/oj/layout',
@@ -24,6 +29,11 @@ const router = createRouter({
           component: () => import('@/views/Exam.vue')
         },
         {
+          path: 'updateExam',
+          name: 'updateExam',
+          component: () => import('@/views/UpdateExam.vue')
+        },
+        {
           path: 'cuser',
           name: 'cuser',
           component: () => import('@/views/Cuser.vue')
@@ -34,4 +44,24 @@ const router = createRouter({
   ]
 })
 
+router.beforeEach((to, from, next) => {
+  if (getToken()) {
+    // 有token 并且要访问登录界面的情况下直接让它进后台
+    if (to.path === '/oj/login') {
+      next({ path: '/oj/layout/cuser' })
+    } else {
+      next()
+    }
+  } else {
+    // 没有token要访问后台 直接跳转登录页面
+    if (to.path !== '/oj/login') {
+      next({
+        path: '/oj/login'
+      })
+    } else {
+      next()
+    }
+  }
+
+})
 export default router

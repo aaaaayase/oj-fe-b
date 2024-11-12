@@ -5,7 +5,7 @@
                 <el-dropdown placement="bottom-end">
                     <span class="el-dropdown__box">
                         <div>
-                            <strong>当前用户：</strong>{{loginUser.nickName}}
+                            <strong>当前用户：</strong>{{ loginUser.nickName }}
                         </div>
                         <el-icon>
                             <ArrowDownBold />
@@ -13,7 +13,7 @@
                     </span>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <el-dropdown-item :icon="SwitchButton">退出登录</el-dropdown-item>
+                            <el-dropdown-item @click="logout" :icon="SwitchButton">退出登录</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -51,13 +51,15 @@
     </el-container>
 </template>
 <script setup>
-import { getUserInfoService } from '@/apis/suser';
+import { getUserInfoService, logoutService } from '@/apis/suser';
 import {
     Management,
     ArrowDownBold,
     SwitchButton
 } from '@element-plus/icons-vue'
 import { reactive } from 'vue';
+import { removeToken } from '@/utils/cookie';
+import router from '@/router';
 
 const loginUser = reactive({
     nickName: ''
@@ -69,6 +71,26 @@ async function getUserInfo() {
 }
 
 getUserInfo()
+
+async function logout() {
+    // 等待点击确认按钮才执行后续操作
+    await ElMessageBox.confirm(
+        '确认退出',
+        '温馨提示',
+        {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning'
+        }
+    )
+    
+    // 发送请求到后端 清除redis中保存的管理员信息 等待成功 如果返回失败就会交给响应拦截器处理
+    await logoutService()
+    // 移除cookie中存储的token
+    removeToken()
+    // 跳转到登录页面
+    router.push("/oj/login")
+}
 
 
 </script>

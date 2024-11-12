@@ -17,3 +17,10 @@ export function getUserInfoService(userAccount, password) {
         method:"get",
     })
 }
+
+export function logoutService(userAccount, password) {
+    return service({
+        url:"/sysUser/logout",
+        method:"delete",
+    })
+}
