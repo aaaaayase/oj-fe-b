@@ -112,7 +112,7 @@
 </template>
 
 <script setup>
-import { examAddService, addExamQuestionService, getExamDetailService, editExamService, delExamQuestionService, publishExamService} from "@/apis/exam"
+import { examAddService, addExamQuestionService, getExamDetailService, editExamService, delExamQuestionService, publishExamService } from "@/apis/exam"
 import { getQuestionListService } from "@/apis/question"
 import Selector from "@/components/QuestionSelector.vue"
 import router from '@/router'
@@ -131,7 +131,8 @@ const params = reactive({
   pageNum: 1,
   pageSize: 10,
   difficulty: '',
-  title: ''
+  title: '',
+  excludeIdStr: ''
 })
 
 
@@ -252,6 +253,13 @@ async function getExamDetailById(examId) {
   formExam.examQuestionList = []
   Object.assign(formExam, examDetail.data)
   formExam.examDate = [examDetail.data.startTime, examDetail.data.endTime]
+
+  // 更新 excludeIdStr，将已添加的题目ID拼接成字符串，用分号隔开
+  if (examDetail.data.examQuestionList && examDetail.data.examQuestionList.length > 0) {
+    params.excludeIdStr = examDetail.data.examQuestionList
+      .map(question => question.questionId)  // 提取题目ID
+      .join(';')  // 拼接成分号分隔的字符串
+  }
 }
 
 </script>
