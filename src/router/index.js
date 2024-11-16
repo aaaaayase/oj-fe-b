@@ -48,7 +48,7 @@ router.beforeEach((to, from, next) => {
   if (getToken()) {
     // 有token 并且要访问登录界面的情况下直接让它进后台
     if (to.path === '/oj/login') {
-      next({ path: '/oj/layout/cuser' })
+      next({ path: '/oj/layout/question' })
     } else {
       next()
     }

@@ -6,7 +6,7 @@
         <div class="login-box">
             <div class="logo-box">
                 <div class="right">
-                    <div class="sys-name">OJ后台管理</div>
+                    <div class="sys-name">在线OJ后台管理</div>
                     <div class="sys-sub-name">好好学习 天天向上</div>
                 </div>
             </div>
@@ -38,7 +38,7 @@ async function loginFun() {
     try {
         const loginResult = await loginService(userAccount.value, password.value)
         console.log("loginResult:", loginResult)
-        router.push("/oj/layout")
+        router.push("/oj/layout/question")
         setToken(loginResult.data)
     } catch (error) {
         console.log("error:", error)
