@@ -11,14 +11,14 @@ export function loginService(userAccount, password) {
     })
 }
 
-export function getUserInfoService(userAccount, password) {
+export function getUserInfoService() {
     return service({
         url:"/sysUser/info",
         method:"get",
     })
 }
 
-export function logoutService(userAccount, password) {
+export function logoutService() {
     return service({
         url:"/sysUser/logout",
         method:"delete",
